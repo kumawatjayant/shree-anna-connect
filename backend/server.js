@@ -81,40 +81,24 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Serve frontend static files in production
-if (process.env.NODE_ENV === 'production') {
-  const frontendBuildPath = path.join(__dirname, '../frontend/build');
-  
-  // Serve static files
-  app.use(express.static(frontendBuildPath));
-  
-  // Handle React routing - send all non-API requests to index.html
-  app.get('*', (req, res) => {
-    // Skip API routes
-    if (req.path.startsWith('/api')) {
-      return res.status(404).json({ message: 'API endpoint not found' });
+// Root route - API info
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Welcome to Shree Anna Connect API',
+    version: '1.0.0',
+    status: 'running',
+    endpoints: {
+      auth: '/api/auth',
+      crops: '/api/crops',
+      products: '/api/products',
+      orders: '/api/orders',
+      bulkRequests: '/api/bulk-requests',
+      admin: '/api/admin',
+      traceability: '/api/traceability',
+      schemes: '/api/schemes'
     }
-    res.sendFile(path.join(frontendBuildPath, 'index.html'));
   });
-} else {
-  // Development - just show API info
-  app.get('/', (req, res) => {
-    res.json({
-      message: 'Welcome to Shree Anna Connect API',
-      version: '1.0.0',
-      endpoints: {
-        auth: '/api/auth',
-        crops: '/api/crops',
-        products: '/api/products',
-        orders: '/api/orders',
-        bulkRequests: '/api/bulk-requests',
-        admin: '/api/admin',
-        traceability: '/api/traceability',
-        schemes: '/api/schemes'
-      }
-    });
-  });
-}
+});
 
 // Error handling middleware
 app.use((err, req, res, next) => {
