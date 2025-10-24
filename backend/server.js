@@ -135,17 +135,24 @@ app.use((req, res) => {
   });
 });
 
-// Start server
-const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`🌐 API URL: http://localhost:${PORT}`);
-});
+// Start server (only in development)
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5001;
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+    console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`🌐 API URL: http://localhost:${PORT}`);
+  });
+}
 
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (err) => {
   console.error('❌ Unhandled Rejection:', err.message);
   // Close server & exit process
-  process.exit(1);
+  if (process.env.NODE_ENV !== 'production') {
+    process.exit(1);
+  }
 });
+
+// Export for Vercel
+module.exports = app;
