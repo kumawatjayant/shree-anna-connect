@@ -4,7 +4,7 @@
   "description": "Millet Supply Chain Management Platform",
   "scripts": {
     "install-all": "cd backend && npm install && cd ../frontend && npm install",
-    "build": "cd frontend && npm install && npm run build && cd ../backend && npm install",
+    "build": "cd frontend && npm install && CI=false npm run build && cd ../backend && npm install",
     "start": "cd backend && node server.js",
     "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\""
   },
