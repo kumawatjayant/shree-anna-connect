@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   AppBar,
@@ -11,7 +11,13 @@ import {
   Card,
   CardContent,
   CardMedia,
-  IconButton
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  Divider
 } from '@mui/material';
 import {
   Agriculture,
@@ -21,13 +27,32 @@ import {
   TrendingUp,
   Verified,
   LocalShipping,
-  Language
+  Language,
+  Menu as MenuIcon,
+  Close as CloseIcon,
+  Home as HomeIcon,
+  Dashboard as DashboardIcon,
+  ExitToApp as LogoutIcon,
+  Login as LoginIcon,
+  PersonAdd as RegisterIcon
 } from '@mui/icons-material';
 import { useAuth } from '../context/AuthContext';
 
 const LandingPage = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleNavigate = (path) => {
+    navigate(path);
+    setMobileMenuOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+    setMobileMenuOpen(false);
+  };
 
   const features = [
     {
@@ -63,28 +88,23 @@ const LandingPage = () => {
     <Box>
       {/* Header */}
       <AppBar position="static" elevation={0}>
-        <Toolbar sx={{ flexWrap: 'wrap' }}>
+        <Toolbar>
           <Typography 
             variant="h6" 
             sx={{ 
               flexGrow: 1, 
               fontWeight: 700,
-              fontSize: { xs: '1rem', md: '1.25rem' }
+              fontSize: { xs: '1.1rem', md: '1.25rem' }
             }}
           >
             🌾 Shree Anna Connect
           </Typography>
-          <Box sx={{ 
-            display: 'flex', 
-            gap: { xs: 0.5, sm: 1 },
-            flexWrap: 'wrap',
-            justifyContent: 'flex-end'
-          }}>
+
+          {/* Desktop Navigation */}
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1, alignItems: 'center' }}>
             <Button 
               color="inherit" 
               onClick={() => navigate('/marketplace')}
-              size="small"
-              sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
             >
               Marketplace
             </Button>
@@ -93,8 +113,6 @@ const LandingPage = () => {
                 <Button 
                   color="inherit" 
                   onClick={() => navigate(`/${user.role}`)}
-                  size="small"
-                  sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
                 >
                   Dashboard
                 </Button>
@@ -105,11 +123,7 @@ const LandingPage = () => {
                     logout();
                     navigate('/');
                   }}
-                  size="small"
-                  sx={{ 
-                    ml: { xs: 0.5, sm: 2 },
-                    fontSize: { xs: '0.75rem', sm: '0.875rem' }
-                  }}
+                  sx={{ ml: 1 }}
                 >
                   Logout
                 </Button>
@@ -119,8 +133,6 @@ const LandingPage = () => {
                 <Button 
                   color="inherit" 
                   onClick={() => navigate('/login')}
-                  size="small"
-                  sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
                 >
                   Login
                 </Button>
@@ -128,19 +140,106 @@ const LandingPage = () => {
                   variant="contained"
                   color="secondary"
                   onClick={() => navigate('/register')}
-                  size="small"
-                  sx={{ 
-                    ml: { xs: 0.5, sm: 2 },
-                    fontSize: { xs: '0.75rem', sm: '0.875rem' }
-                  }}
+                  sx={{ ml: 1 }}
                 >
                   Register
                 </Button>
               </>
             )}
           </Box>
+
+          {/* Mobile Menu Button */}
+          <IconButton
+            color="inherit"
+            onClick={() => setMobileMenuOpen(true)}
+            sx={{ display: { xs: 'flex', md: 'none' } }}
+          >
+            <MenuIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
+
+      {/* Mobile Drawer Menu */}
+      <Drawer
+        anchor="right"
+        open={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+        PaperProps={{
+          sx: { width: 280 }
+        }}
+      >
+        <Box sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Typography variant="h6" fontWeight={600}>
+            Menu
+          </Typography>
+          <IconButton onClick={() => setMobileMenuOpen(false)}>
+            <CloseIcon />
+          </IconButton>
+        </Box>
+        <Divider />
+        <List>
+          <ListItem button onClick={() => handleNavigate('/')}>
+            <ListItemIcon>
+              <HomeIcon color="primary" />
+            </ListItemIcon>
+            <ListItemText primary="Home" />
+          </ListItem>
+          
+          <ListItem button onClick={() => handleNavigate('/marketplace')}>
+            <ListItemIcon>
+              <ShoppingCart color="primary" />
+            </ListItemIcon>
+            <ListItemText primary="Marketplace" />
+          </ListItem>
+
+          {user ? (
+            <>
+              <Divider sx={{ my: 1 }} />
+              <ListItem button onClick={() => handleNavigate(`/${user.role}`)}>
+                <ListItemIcon>
+                  <DashboardIcon color="primary" />
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+              </ListItem>
+              
+              <ListItem button onClick={handleLogout}>
+                <ListItemIcon>
+                  <LogoutIcon color="error" />
+                </ListItemIcon>
+                <ListItemText primary="Logout" primaryTypographyProps={{ color: 'error' }} />
+              </ListItem>
+            </>
+          ) : (
+            <>
+              <Divider sx={{ my: 1 }} />
+              <ListItem button onClick={() => handleNavigate('/login')}>
+                <ListItemIcon>
+                  <LoginIcon color="primary" />
+                </ListItemIcon>
+                <ListItemText primary="Login" />
+              </ListItem>
+              
+              <ListItem 
+                button 
+                onClick={() => handleNavigate('/register')}
+                sx={{ 
+                  bgcolor: 'secondary.main',
+                  color: 'white',
+                  '&:hover': { bgcolor: 'secondary.dark' },
+                  mx: 2,
+                  borderRadius: 1,
+                  mt: 1
+                }}
+              >
+                <ListItemIcon>
+                  <RegisterIcon sx={{ color: 'white' }} />
+                </ListItemIcon>
+                <ListItemText primary="Register" />
+              </ListItem>
+            </>
+          )}
+        </List>
+      </Drawer>
 
       {/* Hero Section */}
       <Box
@@ -149,7 +248,7 @@ const LandingPage = () => {
           color: 'white',
           py: { xs: 8, md: 12 },
           textAlign: 'center',
-          backgroundImage: 'url(https://images.unsplash.com/photo-1625937286074-9ca519d5d9df?w=1600&h=800&fit=crop)',
+          backgroundImage: 'url(https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=1600&h=800&fit=crop)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           '&::before': {

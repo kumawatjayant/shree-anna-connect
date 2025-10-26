@@ -14,9 +14,22 @@ import {
   Toolbar,
   TextField,
   MenuItem,
-  Chip
+  Chip,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  Divider
 } from '@mui/material';
-import { ShoppingCart } from '@mui/icons-material';
+import { 
+  ShoppingCart,
+  Menu as MenuIcon,
+  Close as CloseIcon,
+  Home as HomeIcon,
+  Login as LoginIcon
+} from '@mui/icons-material';
 import api from '../services/api';
 import { toast } from 'react-toastify';
 import { getProductImage } from '../utils/productImages';
@@ -25,10 +38,16 @@ const Marketplace = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [filters, setFilters] = useState({
     category: '',
     search: ''
   });
+
+  const handleNavigate = (path) => {
+    navigate(path);
+    setMobileMenuOpen(false);
+  };
 
   useEffect(() => {
     fetchProducts();
@@ -50,41 +69,79 @@ const Marketplace = () => {
   return (
     <Box>
       <AppBar position="static">
-        <Toolbar sx={{ flexWrap: 'wrap' }}>
+        <Toolbar>
           <Typography 
             variant="h6" 
             sx={{ 
               flexGrow: 1, 
               fontWeight: 600,
-              fontSize: { xs: '1rem', md: '1.25rem' }
+              fontSize: { xs: '1.1rem', md: '1.25rem' }
             }}
           >
-            🌾 Shree Anna Connect - Marketplace
+            🌾 Marketplace
           </Typography>
-          <Box sx={{ 
-            display: 'flex', 
-            gap: { xs: 0.5, sm: 1 },
-            flexWrap: 'wrap'
-          }}>
+
+          {/* Desktop Navigation */}
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1 }}>
             <Button 
               color="inherit" 
               onClick={() => navigate('/')}
-              size="small"
-              sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
             >
               Home
             </Button>
             <Button 
               color="inherit" 
               onClick={() => navigate('/login')}
-              size="small"
-              sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
             >
               Login
             </Button>
           </Box>
+
+          {/* Mobile Menu Button */}
+          <IconButton
+            color="inherit"
+            onClick={() => setMobileMenuOpen(true)}
+            sx={{ display: { xs: 'flex', md: 'none' } }}
+          >
+            <MenuIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
+
+      {/* Mobile Drawer Menu */}
+      <Drawer
+        anchor="right"
+        open={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+        PaperProps={{
+          sx: { width: 280 }
+        }}
+      >
+        <Box sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Typography variant="h6" fontWeight={600}>
+            Menu
+          </Typography>
+          <IconButton onClick={() => setMobileMenuOpen(false)}>
+            <CloseIcon />
+          </IconButton>
+        </Box>
+        <Divider />
+        <List>
+          <ListItem button onClick={() => handleNavigate('/')}>
+            <ListItemIcon>
+              <HomeIcon color="primary" />
+            </ListItemIcon>
+            <ListItemText primary="Home" />
+          </ListItem>
+          
+          <ListItem button onClick={() => handleNavigate('/login')}>
+            <ListItemIcon>
+              <LoginIcon color="primary" />
+            </ListItemIcon>
+            <ListItemText primary="Login" />
+          </ListItem>
+        </List>
+      </Drawer>
 
       <Container maxWidth="lg" sx={{ mt: { xs: 2, md: 4 }, mb: 4, px: { xs: 2, sm: 3 } }}>
         <Typography 
