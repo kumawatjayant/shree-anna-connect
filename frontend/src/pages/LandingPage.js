@@ -248,7 +248,7 @@ const LandingPage = () => {
           color: 'white',
           py: { xs: 8, md: 12 },
           textAlign: 'center',
-          backgroundImage: 'url(https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=1600&h=800&fit=crop)',
+          backgroundImage: 'url(https://images.unsplash.com/photo-1560493676-04071c5f467b?w=1600&h=800&fit=crop)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           '&::before': {
