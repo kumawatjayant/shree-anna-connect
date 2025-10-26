@@ -1,0 +1,23 @@
+{
+  "welcome": "श्री अन्ना कनेक्ट में आपका स्वागत है",
+  "login": "लॉगिन",
+  "phone": "फोन नंबर",
+  "password": "पासवर्ड",
+  "home": "होम",
+  "products": "उत्पाद",
+  "orders": "ऑर्डर",
+  "profile": "प्रोफाइल",
+  "search": "खोजें",
+  "buy": "खरीदें",
+  "sell": "बेचें",
+  "myProducts": "मेरे उत्पाद",
+  "addProduct": "उत्पाद जोड़ें",
+  "logout": "लॉगआउट",
+  "language": "भाषा",
+  "selectLanguage": "भाषा चुनें",
+  "millets": "मिलेट",
+  "price": "कीमत",
+  "quantity": "मात्रा",
+  "addToCart": "कार्ट में जोड़ें",
+  "viewDetails": "विवरण देखें"
+}

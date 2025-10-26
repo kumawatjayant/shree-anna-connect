@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/shree-anna-connect', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://ragrokproductions:16u1de1q7DtFVlAy@cluster0.lforudj.mongodb.net/Shree-anna-connect', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })

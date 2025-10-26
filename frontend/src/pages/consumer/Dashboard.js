@@ -11,15 +11,35 @@ const ConsumerDashboard = () => {
     <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
       <Box sx={{ bgcolor: 'primary.main', color: 'white', py: 2, px: 3 }}>
         <Container maxWidth="lg">
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography variant="h5" fontWeight={600}>
+          <Box sx={{ 
+            display: 'flex', 
+            flexDirection: { xs: 'column', sm: 'row' },
+            justifyContent: 'space-between', 
+            alignItems: { xs: 'flex-start', sm: 'center' },
+            gap: 2
+          }}>
+            <Typography 
+              variant="h5" 
+              fontWeight={600}
+              sx={{ fontSize: { xs: '1.25rem', md: '1.5rem' } }}
+            >
               🌾 Shree Anna Connect - Consumer Dashboard
             </Typography>
-            <Box>
-              <Button color="inherit" onClick={() => navigate('/marketplace')}>
+            <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+              <Button 
+                color="inherit" 
+                onClick={() => navigate('/marketplace')}
+                size="small"
+                sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
+              >
                 Marketplace
               </Button>
-              <Button color="inherit" onClick={() => { logout(); navigate('/'); }}>
+              <Button 
+                color="inherit" 
+                onClick={() => { logout(); navigate('/'); }}
+                size="small"
+                sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
+              >
                 Logout
               </Button>
             </Box>
@@ -27,8 +47,12 @@ const ConsumerDashboard = () => {
         </Container>
       </Box>
 
-      <Container maxWidth="lg" sx={{ mt: 4 }}>
-        <Typography variant="h4" gutterBottom>
+      <Container maxWidth="lg" sx={{ mt: { xs: 2, md: 4 }, px: { xs: 2, sm: 3 } }}>
+        <Typography 
+          variant="h4" 
+          gutterBottom
+          sx={{ fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' } }}
+        >
           Welcome, {user?.name}!
         </Typography>
         

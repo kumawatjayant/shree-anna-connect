@@ -63,71 +63,146 @@ const LandingPage = () => {
     <Box>
       {/* Header */}
       <AppBar position="static" elevation={0}>
-        <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 700 }}>
+        <Toolbar sx={{ flexWrap: 'wrap' }}>
+          <Typography 
+            variant="h6" 
+            sx={{ 
+              flexGrow: 1, 
+              fontWeight: 700,
+              fontSize: { xs: '1rem', md: '1.25rem' }
+            }}
+          >
             🌾 Shree Anna Connect
           </Typography>
-          <Button color="inherit" onClick={() => navigate('/marketplace')}>
-            Marketplace
-          </Button>
-          {user ? (
-            <>
-              <Button color="inherit" onClick={() => navigate(`/${user.role}`)}>
-                Dashboard
-              </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => {
-                  logout();
-                  navigate('/');
-                }}
-                sx={{ ml: 2 }}
-              >
-                Logout
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button color="inherit" onClick={() => navigate('/login')}>
-                Login
-              </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => navigate('/register')}
-                sx={{ ml: 2 }}
-              >
-                Register
-              </Button>
-            </>
-          )}
+          <Box sx={{ 
+            display: 'flex', 
+            gap: { xs: 0.5, sm: 1 },
+            flexWrap: 'wrap',
+            justifyContent: 'flex-end'
+          }}>
+            <Button 
+              color="inherit" 
+              onClick={() => navigate('/marketplace')}
+              size="small"
+              sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
+            >
+              Marketplace
+            </Button>
+            {user ? (
+              <>
+                <Button 
+                  color="inherit" 
+                  onClick={() => navigate(`/${user.role}`)}
+                  size="small"
+                  sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
+                >
+                  Dashboard
+                </Button>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => {
+                    logout();
+                    navigate('/');
+                  }}
+                  size="small"
+                  sx={{ 
+                    ml: { xs: 0.5, sm: 2 },
+                    fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                  }}
+                >
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button 
+                  color="inherit" 
+                  onClick={() => navigate('/login')}
+                  size="small"
+                  sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
+                >
+                  Login
+                </Button>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => navigate('/register')}
+                  size="small"
+                  sx={{ 
+                    ml: { xs: 0.5, sm: 2 },
+                    fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                  }}
+                >
+                  Register
+                </Button>
+              </>
+            )}
+          </Box>
         </Toolbar>
       </AppBar>
 
       {/* Hero Section */}
       <Box
         sx={{
-          background: 'linear-gradient(135deg, #2e7d32 0%, #60ad5e 100%)',
+          position: 'relative',
           color: 'white',
-          py: 10,
-          textAlign: 'center'
+          py: { xs: 8, md: 12 },
+          textAlign: 'center',
+          backgroundImage: 'url(https://images.unsplash.com/photo-1625937286074-9ca519d5d9df?w=1600&h=800&fit=crop)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(46, 125, 50, 0.75)',
+            zIndex: 1
+          }
         }}
       >
-        <Container maxWidth="md">
-          <Typography variant="h2" gutterBottom fontWeight={700}>
+        <Container maxWidth="md" sx={{ position: 'relative', zIndex: 2 }}>
+          <Typography 
+            variant="h2" 
+            gutterBottom 
+            fontWeight={700}
+            sx={{
+              fontSize: { xs: '2rem', sm: '2.5rem', md: '3.75rem' }
+            }}
+          >
             India's First Digital Millet Marketplace
           </Typography>
-          <Typography variant="h5" sx={{ mb: 4, opacity: 0.9 }}>
-            Connecting Farmers, SHGs, Processors & Consumers for a Healthier, Sustainable Future
+          <Typography 
+            variant="h5" 
+            sx={{ 
+              mb: 4, 
+              opacity: 0.95,
+              fontSize: { xs: '1rem', sm: '1.25rem', md: '1.5rem' }
+            }}
+          >
+            Connecting Farmers, SHGs, FPOs, Processors & Consumers for a Healthier, Sustainable Future
           </Typography>
-          <Box>
+          <Box sx={{ 
+            display: 'flex', 
+            flexDirection: { xs: 'column', sm: 'row' },
+            gap: 2,
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}>
             <Button
               variant="contained"
               color="secondary"
               size="large"
               onClick={() => navigate('/register')}
-              sx={{ mr: 2, px: 4, py: 1.5 }}
+              sx={{ 
+                px: 4, 
+                py: 1.5,
+                width: { xs: '100%', sm: 'auto' },
+                maxWidth: { xs: '300px', sm: 'none' }
+              }}
             >
               Get Started
             </Button>
@@ -140,6 +215,8 @@ const LandingPage = () => {
                 borderColor: 'white',
                 px: 4,
                 py: 1.5,
+                width: { xs: '100%', sm: 'auto' },
+                maxWidth: { xs: '300px', sm: 'none' },
                 '&:hover': { borderColor: 'white', bgcolor: 'rgba(255,255,255,0.1)' }
               }}
             >
@@ -150,11 +227,25 @@ const LandingPage = () => {
       </Box>
 
       {/* Features Section */}
-      <Container maxWidth="lg" sx={{ py: 8 }}>
-        <Typography variant="h3" align="center" gutterBottom fontWeight={600}>
+      <Container maxWidth="lg" sx={{ py: { xs: 4, md: 8 }, px: { xs: 2, sm: 3 } }}>
+        <Typography 
+          variant="h3" 
+          align="center" 
+          gutterBottom 
+          fontWeight={600}
+          sx={{ fontSize: { xs: '1.75rem', sm: '2.5rem', md: '3rem' } }}
+        >
           Who We Serve
         </Typography>
-        <Typography variant="body1" align="center" color="text.secondary" sx={{ mb: 6 }}>
+        <Typography 
+          variant="body1" 
+          align="center" 
+          color="text.secondary" 
+          sx={{ 
+            mb: { xs: 3, md: 6 },
+            fontSize: { xs: '0.875rem', sm: '1rem' }
+          }}
+        >
           A comprehensive platform for all stakeholders in the millet value chain
         </Typography>
 
@@ -190,9 +281,15 @@ const LandingPage = () => {
       </Container>
 
       {/* Benefits Section */}
-      <Box sx={{ bgcolor: 'background.default', py: 8 }}>
-        <Container maxWidth="lg">
-          <Typography variant="h3" align="center" gutterBottom fontWeight={600}>
+      <Box sx={{ bgcolor: 'background.default', py: { xs: 4, md: 8 } }}>
+        <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3 } }}>
+          <Typography 
+            variant="h3" 
+            align="center" 
+            gutterBottom 
+            fontWeight={600}
+            sx={{ fontSize: { xs: '1.75rem', sm: '2.5rem', md: '3rem' } }}
+          >
             Why Choose Shree Anna Connect?
           </Typography>
           <Grid container spacing={3} sx={{ mt: 4 }}>
@@ -232,16 +329,28 @@ const LandingPage = () => {
         sx={{
           bgcolor: 'primary.main',
           color: 'white',
-          py: 8,
+          py: { xs: 4, md: 8 },
           textAlign: 'center'
         }}
       >
-        <Container maxWidth="md">
-          <Typography variant="h3" gutterBottom fontWeight={600}>
+        <Container maxWidth="md" sx={{ px: { xs: 2, sm: 3 } }}>
+          <Typography 
+            variant="h3" 
+            gutterBottom 
+            fontWeight={600}
+            sx={{ fontSize: { xs: '1.5rem', sm: '2rem', md: '3rem' } }}
+          >
             Ready to Join the Millet Revolution?
           </Typography>
-          <Typography variant="h6" sx={{ mb: 4, opacity: 0.9 }}>
-            Whether you're a farmer, processor, or consumer - start your journey today
+          <Typography 
+            variant="h6" 
+            sx={{ 
+              mb: 4, 
+              opacity: 0.9,
+              fontSize: { xs: '0.875rem', sm: '1rem', md: '1.25rem' }
+            }}
+          >
+            Whether you're a farmer, FPO, SHG, processor, or consumer - start your journey today
           </Typography>
           <Button
             variant="contained"

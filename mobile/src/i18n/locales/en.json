@@ -1,0 +1,23 @@
+{
+  "welcome": "Welcome to Shree Anna Connect",
+  "login": "Login",
+  "phone": "Phone Number",
+  "password": "Password",
+  "home": "Home",
+  "products": "Products",
+  "orders": "Orders",
+  "profile": "Profile",
+  "search": "Search",
+  "buy": "Buy",
+  "sell": "Sell",
+  "myProducts": "My Products",
+  "addProduct": "Add Product",
+  "logout": "Logout",
+  "language": "Language",
+  "selectLanguage": "Select Language",
+  "millets": "Millets",
+  "price": "Price",
+  "quantity": "Quantity",
+  "addToCart": "Add to Cart",
+  "viewDetails": "View Details"
+}
